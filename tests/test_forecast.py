@@ -124,3 +124,25 @@ def test_forecast_with_custom_exogenous(trained_artifacts):
     assert (fc_df["temperature_c"] == 35.0).all()
     assert (fc_df["production_status"] == 1).all()
 
+
+def test_forecast_historical_continuity_contract(trained_artifacts):
+    """Verify that forecast horizon begins exactly one hour after the final historical timestamp,
+    preventing multi-year or discontinuous axis gaps in downstream visualizations."""
+    clean_df = trained_artifacts["clean_data"]
+    recent_history = clean_df.iloc[-200:].copy()
+    last_hist_ts = pd.to_datetime(recent_history[TIMESTAMP_COL].iloc[-1])
+
+    fc_df = generate_forecast(
+        history_df=recent_history,
+        model_path=trained_artifacts["model_path"],
+        horizon=24,
+        output_path=None,
+    )
+
+    forecast_start = pd.to_datetime(fc_df[TIMESTAMP_COL].iloc[0])
+    temporal_gap = forecast_start - last_hist_ts
+    assert temporal_gap == pd.Timedelta(hours=1), (
+        f"Temporal discontinuity: forecast starts at {forecast_start}, but history ends at {last_hist_ts}. "
+        f"Expected exact 1-hour increment."
+    )
+

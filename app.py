@@ -233,7 +233,15 @@ with tab1:
     )
 
     recent_history_hours = 48
-    recent_actuals = history_df.iloc[-recent_history_hours:][["timestamp", "load_kw"]].copy()
+    forecast_start = forecast_df["timestamp"].min()
+
+    # Align historical window to the 48 hours directly preceding the forecast horizon
+    preceding_history = history_df[history_df["timestamp"] < forecast_start]
+    if len(preceding_history) >= recent_history_hours:
+        recent_actuals = preceding_history.iloc[-recent_history_hours:][["timestamp", "load_kw"]].copy()
+    else:
+        recent_actuals = history_df.iloc[-recent_history_hours:][["timestamp", "load_kw"]].copy()
+
     recent_actuals = recent_actuals.rename(columns={"load_kw": "Load (kW)"})
     recent_actuals["Series"] = "Historical Actual"
 
