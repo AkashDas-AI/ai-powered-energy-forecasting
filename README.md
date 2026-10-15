@@ -127,10 +127,13 @@ AI-Powered Energy Consumption Forecasting/
 ├── docs/
 │   ├── README.md                   # Central documentation directory index
 │   ├── architecture.md             # System architecture and data flow diagrams
+│   ├── interview_guide.md          # Comprehensive interview preparation & technical guide
+│   ├── module_reference.md         # Production module APIs and test specifications
 │   ├── data_dictionary.md          # Complete schema definition, units, and ranges
 │   ├── dataset_selection.md        # Public dataset comparative evaluation matrix
 │   ├── methodology.md              # Modeling rationale, equations, and temporal audit
-│   └── limitations.md              # Boundary assumptions, warm-up needs, and future scope
+│   ├── limitations.md              # Boundary assumptions, warm-up needs, and future scope
+│   └── validation_guide.md         # Automated test protocols and baseline hash checks
 ├── images/                         # Application figures and screenshots
 ├── models/                         # Serialized model bundles (.joblib)
 ├── outputs/

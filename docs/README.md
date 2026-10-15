@@ -1,28 +1,26 @@
-# AI-Powered Energy Consumption Forecasting — Technical Documentation Hub
+# Technical Documentation Hub
 
-Welcome to the central technical documentation repository for the **AI-Powered Energy Consumption Forecasting** system. This folder serves as the single source of truth for technical specifications, architecture diagrams, data dictionaries, model dynamics, and verification procedures.
+Welcome to the central technical documentation repository for the **AI-Powered Energy Consumption Forecasting** system. This folder serves as the single source of truth for system architecture, component specifications, mathematical methodology, data dictionaries, verification protocols, and interview preparation.
 
 ---
 
-## 📁 Documentation Index
+## Documentation Index
 
 | Document | Purpose & Scope |
 | :--- | :--- |
-| [**Public Dataset Selection**](dataset_selection.md) | Official candidate dataset evaluation, comparative matrix, selection rationale, and integration plan. |
-| [**Architecture & Data Flow**](architecture.md) | High-level system architecture, component breakdown, and end-to-end data lifecycle. |
-| [**Data Dictionary**](data_dictionary.md) | Detailed schema definition, physical units (kW, kWh, °C), datatypes, and valid numeric ranges. |
-| [**Methodology & Approach**](methodology.md) | Simulation dynamics, leakage prevention, chronological splitting, and recursive inference mechanics. |
-| [**Known Limitations**](limitations.md) | Boundary conditions, cold-start warm-up constraints, and exogenous assumptions. |
-| [**Validation & Testing Guide**](validation_guide.md) | Automated testing protocols (`pytest`), quality gates, and anti-leakage verification routines. |
-| [**Dataset Specification**](dataset_spec.md) | Real-world benchmark specifications (PJM, UCI) and preprocessing protocols. |
-| [**Model Specification & Learning**](model_spec.md) | Mathematical formulation of tree-based and recurrent sequence models, loss functions, and optimization. |
-| [**Module Reference**](module_reference.md) | Codebase package structure, module responsibilities, class/function contracts, and dependencies. |
+| [**Interview & Technical Mastery Guide**](interview_guide.md) | **Primary study & review guide**: Elevator pitches, architecture deep dive, module breakdown, benchmark scorecards, weather experiment insights, and 25 comprehensive interview Q&As. |
+| [**Architecture & Data Flow**](architecture.md) | High-level system architecture diagram, multi-target pipeline flow, end-to-end data lifecycle, and artifact storage topology. |
+| [**Module Reference & API Specification**](module_reference.md) | Detailed technical reference of all production modules in `src/`, public functions, input/output contracts, and test modules in `tests/`. |
+| [**Methodology & Approach**](methodology.md) | Simulation physics, zero-leakage mathematical proofs, two-stage chronological split protocol, recursive multi-step mechanics, and Portuguese DST empirical analysis. |
+| [**Data Dictionary**](data_dictionary.md) | Detailed schema definition, physical units (kW, kWh, °C), datatypes, and valid numeric ranges for raw, processed, and forecast outputs. |
+| [**Public Dataset Selection**](dataset_selection.md) | Candidate dataset comparative evaluation matrix, selection rationale (UCI ElectricityLoadDiagrams vs. Tetouan vs. PJM), and integration plan. |
+| [**Known Limitations & Assumptions**](limitations.md) | Boundary conditions, single-meter scope, anonymized metadata caveats, cold-start warm-up constraints, and future roadmap. |
+| [**Validation & Verification Guide**](validation_guide.md) | Automated testing protocols (48 unit tests across 6 modules), quality gates, mathematical anti-leakage tests, and Baseline v1 SHA256 checksum verification. |
 
 ---
 
-## 🔄 Project Documentation Protocol
+## Project Documentation Protocol
 
-Every implementation step:
-1. **Module & Document Alignment**: Code changes and technical decisions are mirrored in this folder.
-2. **Progress Reports**: Each milestone is accompanied by a concise implementation brief.
-3. **Verification Artefacts**: Includes executable test commands and observed outputs before completion.
+1. **Module & Document Alignment**: All code changes, schema modifications, and modeling decisions are mirrored in this technical documentation folder.
+2. **Mathematical Precision**: Power ($\text{kW}$) and energy ($\text{kWh}$) are mathematically distinguished throughout all documentation and pipelines.
+3. **Reproducibility Guarantee**: Every benchmark metric is accompanied by exact replication commands, seed controls, and verified file checksums.
