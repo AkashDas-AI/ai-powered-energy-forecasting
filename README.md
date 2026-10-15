@@ -127,7 +127,6 @@ AI-Powered Energy Consumption Forecasting/
 ├── docs/
 │   ├── README.md                   # Central documentation directory index
 │   ├── architecture.md             # System architecture and data flow diagrams
-│   ├── interview_guide.md          # Comprehensive interview preparation & technical guide
 │   ├── module_reference.md         # Production module APIs and test specifications
 │   ├── data_dictionary.md          # Complete schema definition, units, and ranges
 │   ├── dataset_selection.md        # Public dataset comparative evaluation matrix

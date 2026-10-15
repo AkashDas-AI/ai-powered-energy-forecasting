@@ -53,3 +53,7 @@ scratch/
 *.log
 *.tmp
 *.bak
+
+# Personal study, interview, and preparation files (local only)
+docs/*interview*
+*interview*
