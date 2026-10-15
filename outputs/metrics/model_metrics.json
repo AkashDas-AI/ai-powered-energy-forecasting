@@ -1,0 +1,63 @@
+{
+    "evaluation_protocol": "Chronological out-of-sample holdout test on final 720 hours. Features strictly utilize historical observations preceding target.",
+    "test_period": {
+        "start": "2024-12-01 00:00:00",
+        "end": "2024-12-30 23:00:00",
+        "hours": 720
+    },
+    "baseline_24h_persistence": {
+        "mae": 49.8692,
+        "rmse": 98.496,
+        "wape": 0.2425,
+        "wape_pct": 24.25,
+        "r2_score": 0.1898,
+        "sample_count": 720
+    },
+    "random_forest_model": {
+        "mae": 6.1201,
+        "rmse": 7.7599,
+        "wape": 0.0298,
+        "wape_pct": 2.98,
+        "r2_score": 0.995,
+        "sample_count": 720
+    },
+    "performance_improvement": {
+        "wape_reduction_pct": 87.71,
+        "rmse_reduction_pct": 92.12
+    },
+    "training_metadata": {
+        "train_samples": 16632,
+        "test_samples": 720,
+        "feature_count": 27,
+        "feature_columns": [
+            "temperature_c",
+            "production_status",
+            "hour",
+            "day_of_week",
+            "day_of_month",
+            "month",
+            "is_weekend",
+            "hour_sin",
+            "hour_cos",
+            "day_sin",
+            "day_cos",
+            "month_sin",
+            "month_cos",
+            "load_kw_lag_1",
+            "load_kw_lag_2",
+            "load_kw_lag_24",
+            "load_kw_lag_48",
+            "load_kw_lag_168",
+            "temperature_c_lag_1",
+            "load_kw_rolling_mean_6h",
+            "load_kw_rolling_std_6h",
+            "load_kw_rolling_mean_12h",
+            "load_kw_rolling_std_12h",
+            "load_kw_rolling_mean_24h",
+            "load_kw_rolling_std_24h",
+            "load_kw_rolling_mean_168h",
+            "load_kw_rolling_std_168h"
+        ],
+        "trained_at": "2026-10-14T17:21:10.714363"
+    }
+}

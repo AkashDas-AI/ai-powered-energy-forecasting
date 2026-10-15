@@ -1,0 +1,142 @@
+{
+    "evaluation_protocol": "Dual-Tier Chronological Out-of-Sample Benchmark with Two-Stage Training/Validation Policy. Stage 1: Development & Validation (hyperparameter evaluation). Stage 2: Production Refit on combined pre-test history before evaluating untouched holdout.",
+    "two_stage_training_policy": {
+        "policy_description": "Stage 1 fits on pre-validation history to measure validation error. Stage 2 refits on all pre-test history (Train + Validation) prior to final evaluation on the untouched holdout test set.",
+        "final_training_cutoff": "2014-10-31 23:00:00",
+        "validation_included_in_final_fit": true,
+        "validation_samples_count": 2952
+    },
+    "stage_1_development_validation": {
+        "description": "Stage 1 development evaluation: Model fitted on training period and evaluated on validation period for hyperparameter confirmation.",
+        "training_period": {
+            "start": "2012-01-08 00:00:00",
+            "end": "2014-06-30 23:00:00",
+            "samples": 21720
+        },
+        "validation_period": {
+            "start": "2014-07-01 00:00:00",
+            "end": "2014-10-31 23:00:00",
+            "samples": 2952
+        },
+        "validation_metrics": {
+            "mae": 4.8384,
+            "rmse": 6.5382,
+            "wape": 0.0437,
+            "wape_pct": 4.37,
+            "r2_score": 0.963,
+            "sample_count": 2952
+        },
+        "diagnostic_unrefit_test_metrics": {
+            "mae": 4.2689,
+            "rmse": 6.3332,
+            "wape": 0.0464,
+            "wape_pct": 4.64,
+            "r2_score": 0.9453,
+            "sample_count": 1464
+        }
+    },
+    "test_period": {
+        "start": "2014-11-01 00:00:00",
+        "end": "2014-12-31 23:00:00",
+        "hours": 1464
+    },
+    "baseline_24h_persistence": {
+        "mae": 6.6353,
+        "rmse": 11.9939,
+        "wape": 0.0721,
+        "wape_pct": 7.21,
+        "r2_score": 0.8037,
+        "sample_count": 1464
+    },
+    "baseline_168h_weekly_persistence": {
+        "mae": 6.4692,
+        "rmse": 10.5241,
+        "wape": 0.0703,
+        "wape_pct": 7.03,
+        "r2_score": 0.8489,
+        "sample_count": 1464
+    },
+    "random_forest_one_step": {
+        "mae": 4.2992,
+        "rmse": 6.5247,
+        "wape": 0.0467,
+        "wape_pct": 4.67,
+        "r2_score": 0.9419,
+        "sample_count": 1464
+    },
+    "performance_improvement_one_step_vs_24h_base": {
+        "wape_reduction_pct": 35.23,
+        "rmse_reduction_pct": 45.6
+    },
+    "recursive_24h_rolling_origin_evaluation": {
+        "evaluated_origins_count": 60,
+        "total_evaluated_forecast_points": 1440,
+        "aggregate_metrics": {
+            "mae": 5.1674,
+            "rmse": 8.8706,
+            "wape": 0.0561,
+            "wape_pct": 5.61,
+            "r2_score": 0.8917,
+            "sample_count": 1440
+        },
+        "mae_by_horizon_step": {
+            "h_01": 2.139,
+            "h_02": 2.442,
+            "h_03": 2.006,
+            "h_04": 2.333,
+            "h_05": 3.045,
+            "h_06": 3.992,
+            "h_07": 5.715,
+            "h_08": 5.305,
+            "h_09": 4.81,
+            "h_10": 5.321,
+            "h_11": 6.77,
+            "h_12": 6.158,
+            "h_13": 6.759,
+            "h_14": 6.343,
+            "h_15": 6.516,
+            "h_16": 6.527,
+            "h_17": 6.471,
+            "h_18": 6.679,
+            "h_19": 6.852,
+            "h_20": 5.751,
+            "h_21": 5.003,
+            "h_22": 5.44,
+            "h_23": 5.694,
+            "h_24": 5.946
+        }
+    },
+    "training_metadata": {
+        "train_samples": 24672,
+        "test_samples": 1464,
+        "feature_count": 24,
+        "feature_columns": [
+            "hour",
+            "day_of_week",
+            "day_of_month",
+            "month",
+            "is_weekend",
+            "hour_sin",
+            "hour_cos",
+            "day_sin",
+            "day_cos",
+            "month_sin",
+            "month_cos",
+            "load_kw_lag_1",
+            "load_kw_lag_2",
+            "load_kw_lag_24",
+            "load_kw_lag_48",
+            "load_kw_lag_168",
+            "load_kw_rolling_mean_6h",
+            "load_kw_rolling_std_6h",
+            "load_kw_rolling_mean_12h",
+            "load_kw_rolling_std_12h",
+            "load_kw_rolling_mean_24h",
+            "load_kw_rolling_std_24h",
+            "load_kw_rolling_mean_168h",
+            "load_kw_rolling_std_168h"
+        ],
+        "training_cutoff": "2014-10-31 23:00:00",
+        "trained_at": "2026-10-14T21:02:48.757649"
+    }
+}

@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and test runners
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables and secrets
+.env
+.env.*
+secrets.json
+
+# IDE & Operating System temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Data directories (keep directory structure tracked via .gitkeep)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Model weights and binaries
+models/*
+!models/.gitkeep
+
+# Pipeline outputs (track benchmark metrics and prediction CSVs for transparency)
+outputs/metrics/*
+!outputs/metrics/.gitkeep
+!outputs/metrics/*.json
+outputs/predictions/*
+!outputs/predictions/.gitkeep
+!outputs/predictions/*.csv
+outputs/figures/*
+!outputs/figures/.gitkeep
+!outputs/figures/*.png
+
+# Temporary scratch files and logs
+scratch/
+*.log
+*.tmp
+*.bak
