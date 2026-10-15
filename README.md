@@ -1,6 +1,6 @@
-# ⚡ AI-Powered Energy Consumption Forecasting System
+# AI-Powered Energy Consumption Forecasting System
 
-A production-grade, test-driven machine learning system for forecasting hourly commercial and facility electricity demand. Built with rigorous time-series feature engineering, zero-leakage shifted rolling statistics, out-of-sample chronological evaluation, and an interactive Streamlit operational dashboard.
+A modular, test-driven machine learning system for forecasting hourly commercial and facility electricity demand. Built with rigorous time-series feature engineering, zero-leakage shifted rolling statistics, out-of-sample chronological evaluation, and an interactive Streamlit operational dashboard.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
@@ -27,19 +27,19 @@ Accurate short-term electricity load forecasting (24 hours ahead) is critical fo
 ## 2. Interactive Operational Dashboard Showcase
 
 The system features an interactive **Streamlit Operational Dashboard** (`app.py`) designed for energy dispatchers, facility managers, and data science auditors. The application allows users to toggle between three forecast targets:
-1. **UCI Electricity `MT_320` — Official Operational Baseline (Model A)**: Pure autoregressive Random Forest delivering out-of-sample day-ahead forecasts.
-2. **UCI Electricity `MT_320` + Weather — Research Experiment (Model B)**: Controlled experiment evaluating Lisbon ERA5 temperature reanalysis against pure autoregression.
+1. **UCI Electricity `MT_320` (Official Operational Baseline: Model A)**: Pure autoregressive Random Forest delivering out-of-sample day-ahead forecasts.
+2. **UCI Electricity `MT_320` + Weather (Research Experiment: Model B)**: Controlled experiment evaluating Lisbon ERA5 temperature reanalysis against pure autoregression.
 3. **Synthetic Facility Load (Simulated)**: Physics-informed simulation showcasing HVAC thermal dynamics and industrial shift cycles.
 
 Each target provides three dedicated interactive analytical views: **24-Hour Forecast Curve**, **Historical Energy Profile (Past 14 Days)**, and **Model Evaluation and Performance Comparison**.
 
 ---
 
-### 2.1 Day-Ahead Operational Forecast (Model A — UCI `MT_320`)
+### 2.1 Day-Ahead Operational Forecast (Model A: UCI `MT_320`)
 
 ![Day-Ahead Forecast Curve for UCI MT_320 Baseline](images/uci_baseline_forecast_24h.png)
 
-> **Figure 2.1 — Day-Ahead Operational Forecast**: Visualizes the autonomous 24-hour load forecast for Portuguese smart meter `MT_320` commencing January 1, 2015. Top KPI cards immediately surface forecast peak demand (104.99 kW at 19:00), minimum baseload (73.54 kW at 06:00), and projected 24-hour aggregate consumption (2,176.4 kWh). The chart anchors the day-ahead curve to the preceding 72 hours of observed telemetry, providing dispatchers with seamless visual continuity and one-click CSV export.
+> **Figure 2.1: Day-Ahead Operational Forecast**: Visualizes the autonomous 24-hour load forecast for Portuguese smart meter `MT_320` commencing January 1, 2015. Top KPI cards immediately surface forecast peak demand (104.99 kW at 19:00), minimum baseload (73.54 kW at 06:00), and projected 24-hour aggregate consumption (2,176.4 kWh). The chart anchors the day-ahead curve to the preceding 72 hours of observed telemetry, providing dispatchers with seamless visual continuity and one-click CSV export.
 
 ---
 
@@ -47,7 +47,7 @@ Each target provides three dedicated interactive analytical views: **24-Hour For
 
 ![Model Evaluation Scorecard and Benchmarks](images/uci_baseline_model_evaluation.png)
 
-> **Figure 2.2 — Holdout Performance Scorecard & Rolling-Origin Evaluation**: Validates Model A against utility persistence baselines on the untouched holdout partition (November–December 2014, 1,464 hours). Model A achieves **4.30 kW MAE** and **4.67% WAPE**, outperforming 24-hour daily persistence (6.64 kW MAE, 7.21% WAPE) by **35.2%** and 168-hour weekly persistence (6.47 kW MAE, 7.03% WAPE) by **33.6%**. The lower panel details the 60-origin recursive evaluation across 1,440 predictions, tracking error compounding across the 24-hour horizon ($h=+1$ at 2.14 kW $\rightarrow$ $h=+24$ at 5.95 kW).
+> **Figure 2.2: Holdout Performance Scorecard and Rolling-Origin Evaluation**: Validates Model A against utility persistence baselines on the untouched holdout partition (November to December 2014, 1,464 hours). Model A achieves **4.30 kW MAE** and **4.67% WAPE**, outperforming 24-hour daily persistence (6.64 kW MAE, 7.21% WAPE) by **35.2%** and 168-hour weekly persistence (6.47 kW MAE, 7.03% WAPE) by **33.6%**. The lower panel details the 60-origin recursive evaluation across 1,440 predictions, tracking error compounding across the 24-hour horizon ($h=+1$ at 2.14 kW $\rightarrow$ $h=+24$ at 5.95 kW).
 
 ---
 
@@ -55,7 +55,7 @@ Each target provides three dedicated interactive analytical views: **24-Hour For
 
 ![Weather Experiment Evaluation and Feature Importance](images/weather_model_evaluation.png)
 
-> **Figure 2.3 — Side-by-Side Model Comparison & Negative Result Audit**: Directly compares Model A (pure autoregressive) against Model B (weather-aware). The dashboard highlights that temperature features contribute a negligible **0.4382%** total Gini importance (vs. **94.86%** for autoregressive lags). When evaluated under realistic operational conditions using diurnal weather persistence, Model B slightly degrades recursive WAPE from 5.61% to 5.64%. This transparently justifies the engineering decision to freeze Model A as the official production forecaster.
+> **Figure 2.3: Side-by-Side Model Comparison and Negative Result Audit**: Directly compares Model A (pure autoregressive) against Model B (weather-aware). The dashboard highlights that temperature features contribute a negligible **0.4382%** total Gini importance (vs. **94.86%** for autoregressive lags). When evaluated under realistic operational conditions using diurnal weather persistence, Model B slightly degrades recursive WAPE from 5.61% to 5.64%. This transparently justifies the engineering decision to freeze Model A as the official production forecaster.
 
 ---
 
@@ -63,7 +63,7 @@ Each target provides three dedicated interactive analytical views: **24-Hour For
 
 ![14-Day Historical Energy Profile](images/synthetic_historical_profile.png)
 
-> **Figure 2.4 — 14-Day Historical Energy & Thermal Profile**: Displays simulated commercial facility telemetry over a two-week window. The visualization captures distinct diurnal two-shift operations (morning ramp-up to ~180 kW), weekend baseload setbacks (~80 kW), and dynamic HVAC response correlated with ambient temperature variations ($7.5\text{ kW}/^\circ\text{C}$ cooling, $5.2\text{ kW}/^\circ\text{C}$ heating).
+> **Figure 2.4: 14-Day Historical Energy and Thermal Profile**: Displays simulated commercial facility telemetry over a two-week window. The visualization captures distinct diurnal two-shift operations (morning ramp-up to ~180 kW), weekend baseload setbacks (~80 kW), and dynamic HVAC response correlated with ambient temperature variations ($7.5\text{ kW}/^\circ\text{C}$ cooling, $5.2\text{ kW}/^\circ\text{C}$ heating).
 
 ---
 
@@ -71,7 +71,7 @@ Each target provides three dedicated interactive analytical views: **24-Hour For
 
 - **Dual Ingestion Engine**: Supports both physics-informed synthetic simulations (with baseload, shift schedules, and HVAC thermal dynamics) and real-world smart meter data (UCI ElectricityLoadDiagrams).
 - **Zero-Leakage Feature Engineering**: Computes calendar coordinates, cyclical harmonics ($\sin/\cos$), 5 autoregressive lags ($1\text{h}, 2\text{h}, 24\text{h}, 48\text{h}, 168\text{h}$), and shifted rolling statistics (6h, 12h, 24h, 168h rolling mean/std) strictly applying `.shift(1)` to eliminate lookahead bias.
-- **Two-Stage Chronological Protocol**: Separate development/validation split (July–October 2014) for hyperparameter confirmation, followed by production refit on all pre-test data prior to evaluating the untouched holdout test partition (November–December 2014).
+- **Two-Stage Chronological Protocol**: Separate development/validation split (July to October 2014) for hyperparameter confirmation, followed by production refit on all pre-test data prior to evaluating the untouched holdout test partition (November to December 2014).
 - **Dual-Tier Baseline Benchmarking**: Benchmarks machine learning models against both 24-hour daily persistence and 168-hour weekly persistence.
 - **Recursive Multi-Step Forecaster**: Autonomous 24-hour recursive forecasting engine ($t+1 \dots t+24$) that feeds step predictions dynamically into downstream autoregressive inputs without ground truth leakage.
 - **Interactive Streamlit Dashboard**: Web interface with KPI scorecards, interactive forecast curves, historical time-series exploration, and one-click CSV export.
@@ -92,13 +92,13 @@ flowchart TD
 
 The repository supports two distinct data sources:
 
-### 4.1 Primary Real-World Benchmark: UCI ElectricityLoadDiagrams2011–2014
+### 4.1 Primary Real-World Benchmark: UCI ElectricityLoadDiagrams2011-2014
 - **Official Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014)
 - **Dataset DOI**: [`10.24432/C58C86`](https://doi.org/10.24432/C58C86)
 - **License**: Creative Commons Attribution 4.0 International (CC BY 4.0)
 - **Original Authors**: Artur Trindade, Vitório Carvalho, Przemyslaw Biecek, Alfredo Serrano (INESC Porto / EDP Distribuição)
 - **Dataset Scope**: Electricity consumption of 370 Portuguese consumers logged at 15-minute intervals from 2011 to 2014.
-- **Selected Meter (`MT_320`)**: Selected via multi-criterion audit: 100% telemetry continuity across the 2012–2014 active window (26,304 consecutive hourly observations), zero missing records, mean load of 102.31 kW, and standard deviation of 28.28 kW.
+- **Selected Meter (`MT_320`)**: Selected via multi-criterion audit: 100% telemetry continuity across the 2012 to 2014 active window (26,304 consecutive hourly observations), zero missing records, mean load of 102.31 kW, and standard deviation of 28.28 kW.
 - **Anonymization Caveat**: Client `MT_320` is an anonymized utility customer. The load profile exhibits distinct commercial-scale business-hour diurnal patterns, but is documented strictly as empirical smart-meter telemetry without assuming an unverified industrial sub-classification.
 - **Measurement Units Convention**: Telemetry values represent **average power** over the interval in kilowatts ($\text{kW}$). Hourly interval energy consumption in kilowatt-hours is:
   $$E_{\text{hour}} = \bar{P}_{\text{hour}} \times 1.0\text{ h} \quad [\text{kWh}]$$
@@ -269,15 +269,15 @@ Randomized K-fold cross-validation is strictly avoided in this system because ra
 (2012-01-08 to 2014-10-31)                                                              (2014-11-01 to 12-31)
 ```
 
-1. **Stage 1 — Development & Validation (Pre-Test Split)**:
+1. **Stage 1 (Development and Validation: Pre-Test Split)**:
    - **Training Window**: `2012-01-08 00:00:00` to `2014-06-30 23:00:00` (21,720 valid hourly samples after 168h warm-up dropna).
    - **Validation Window**: `2014-07-01 00:00:00` to `2014-10-31 23:00:00` (2,952 hourly records / 4 months).
    - **Purpose**: Confirm lag structure and Random Forest hyperparameters (`n_estimators=100`, `max_depth=14`, `min_samples_split=5`) without touching the holdout test set.
    - *Diagnostic Validation Performance*: MAE = **4.84 kW**, RMSE = **6.54 kW**, WAPE = **4.37%**, $R^2$ = **0.9630**.
-2. **Stage 2 — Production Refit & Final Holdout Benchmark**:
+2. **Stage 2 (Production Refit and Final Holdout Benchmark)**:
    - **Combined Pre-Test Training Window**: `2012-01-08 00:00:00` to `2014-10-31 23:00:00` (24,672 valid hourly samples).
    - **Final Holdout Test Partition**: `2014-11-01 00:00:00` to `2014-12-31 23:00:00` (61 days / 1,464 hourly records).
-   - **Protocol**: The confirmed architecture is refit across all pre-test data to integrate the most recent seasonal transitions prior to evaluating the untouched November–December 2014 holdout.
+   - **Protocol**: The confirmed architecture is refit across all pre-test data to integrate the most recent seasonal transitions prior to evaluating the untouched November to December 2014 holdout.
 
 ---
 
@@ -355,7 +355,7 @@ An audit of metric recalculation demonstrated that saved JSON metrics are comput
 
 ---
 
-## 📄 License & Attribution
+## License & Attribution
 
 - **Source Code & Original Materials**: The project source code, pipelines, analysis scripts, and original documentation are released under the [MIT License](LICENSE).
 - **Third-Party Dataset Licensing & Attribution**: Third-party datasets and telemetry referenced or ingested by this project are not relicensed under MIT and retain their official open data licenses:
