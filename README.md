@@ -4,7 +4,7 @@ A production-grade, test-driven machine learning system for forecasting hourly c
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 47 Passed](https://img.shields.io/badge/tests-47%20passed-brightgreen.svg)](tests/)
+[![Tests: 48 Passed](https://img.shields.io/badge/tests-48%20passed-brightgreen.svg)](tests/)
 [![Code Style: Modular](https://img.shields.io/badge/architecture-modular-orange.svg)](docs/architecture.md)
 
 ---
@@ -20,11 +20,54 @@ Accurate short-term electricity load forecasting (24 hours ahead) is critical fo
 1. **Develop an Operational Baseline (Model A)**: Build an autonomous pure autoregressive Random Forest model capable of outperforming standard utility benchmarks (24h Daily Naive and 168h Weekly Naive persistence) on real-world smart meter telemetry.
 2. **Eliminate Data Leakage**: Implement mathematical guarantees ensuring no future observations contaminate historical lags or rolling statistics.
 3. **Conduct Controlled Scientific Experiments**: Rigorously investigate whether incorporating external ambient temperature (Model B) adds predictive value over pure autoregression, adhering to scientific skepticism rather than assuming weather always helps.
-4. **Deliver Portfolio-Ready Engineering**: Provide an automated test suite (47 unit tests), clean CLI automation, reproducible data pipelines, and an interactive decision-support dashboard.
+4. **Deliver Portfolio-Ready Engineering**: Provide an automated test suite (48 unit tests), clean CLI automation, reproducible data pipelines, and an interactive decision-support dashboard.
 
 ---
 
-## 2. Key Features & System Workflow
+## 2. Interactive Operational Dashboard Showcase
+
+The system features an interactive **Streamlit Operational Dashboard** (`app.py`) designed for energy dispatchers, facility managers, and data science auditors. The application allows users to toggle between three forecast targets:
+1. **UCI Electricity `MT_320` — Official Operational Baseline (Model A)**: Pure autoregressive Random Forest delivering out-of-sample day-ahead forecasts.
+2. **UCI Electricity `MT_320` + Weather — Research Experiment (Model B)**: Controlled experiment evaluating Lisbon ERA5 temperature reanalysis against pure autoregression.
+3. **Synthetic Facility Load (Simulated)**: Physics-informed simulation showcasing HVAC thermal dynamics and industrial shift cycles.
+
+Each target provides three dedicated interactive analytical views: **24-Hour Forecast Curve**, **Historical Energy Profile (Past 14 Days)**, and **Model Evaluation and Performance Comparison**.
+
+---
+
+### 2.1 Day-Ahead Operational Forecast (Model A — UCI `MT_320`)
+
+![Day-Ahead Forecast Curve for UCI MT_320 Baseline](images/uci_baseline_forecast_24h.png)
+
+> **Figure 2.1 — Day-Ahead Operational Forecast**: Visualizes the autonomous 24-hour load forecast for Portuguese smart meter `MT_320` commencing January 1, 2015. Top KPI cards immediately surface forecast peak demand (104.99 kW at 19:00), minimum baseload (73.54 kW at 06:00), and projected 24-hour aggregate consumption (2,176.4 kWh). The chart anchors the day-ahead curve to the preceding 72 hours of observed telemetry, providing dispatchers with seamless visual continuity and one-click CSV export.
+
+---
+
+### 2.2 Multi-Tier Benchmark Evaluation & Recursive Validation (Model A)
+
+![Model Evaluation Scorecard and Benchmarks](images/uci_baseline_model_evaluation.png)
+
+> **Figure 2.2 — Holdout Performance Scorecard & Rolling-Origin Evaluation**: Validates Model A against utility persistence baselines on the untouched holdout partition (November–December 2014, 1,464 hours). Model A achieves **4.30 kW MAE** and **4.67% WAPE**, outperforming 24-hour daily persistence (6.64 kW MAE, 7.21% WAPE) by **35.2%** and 168-hour weekly persistence (6.47 kW MAE, 7.03% WAPE) by **33.6%**. The lower panel details the 60-origin recursive evaluation across 1,440 predictions, tracking error compounding across the 24-hour horizon ($h=+1$ at 2.14 kW $\rightarrow$ $h=+24$ at 5.95 kW).
+
+---
+
+### 2.3 Scientific Integrity & Feature Importance Audit (Model A vs. Model B)
+
+![Weather Experiment Evaluation and Feature Importance](images/weather_model_evaluation.png)
+
+> **Figure 2.3 — Side-by-Side Model Comparison & Negative Result Audit**: Directly compares Model A (pure autoregressive) against Model B (weather-aware). The dashboard highlights that temperature features contribute a negligible **0.4382%** total Gini importance (vs. **94.86%** for autoregressive lags). When evaluated under realistic operational conditions using diurnal weather persistence, Model B slightly degrades recursive WAPE from 5.61% to 5.64%. This transparently justifies the engineering decision to freeze Model A as the official production forecaster.
+
+---
+
+### 2.4 Physics-Informed Facility Telemetry (Synthetic Simulation)
+
+![14-Day Historical Energy Profile](images/synthetic_historical_profile.png)
+
+> **Figure 2.4 — 14-Day Historical Energy & Thermal Profile**: Displays simulated commercial facility telemetry over a two-week window. The visualization captures distinct diurnal two-shift operations (morning ramp-up to ~180 kW), weekend baseload setbacks (~80 kW), and dynamic HVAC response correlated with ambient temperature variations ($7.5\text{ kW}/^\circ\text{C}$ cooling, $5.2\text{ kW}/^\circ\text{C}$ heating).
+
+---
+
+## 3. Key Features & System Workflow
 
 - **Dual Ingestion Engine**: Supports both physics-informed synthetic simulations (with baseload, shift schedules, and HVAC thermal dynamics) and real-world smart meter data (UCI ElectricityLoadDiagrams).
 - **Zero-Leakage Feature Engineering**: Computes calendar coordinates, cyclical harmonics ($\sin/\cos$), 5 autoregressive lags ($1\text{h}, 2\text{h}, 24\text{h}, 48\text{h}, 168\text{h}$), and shifted rolling statistics (6h, 12h, 24h, 168h rolling mean/std) strictly applying `.shift(1)` to eliminate lookahead bias.
@@ -45,11 +88,11 @@ flowchart TD
 
 ---
 
-## 3. Dataset Provenance, Attribution & Limitations
+## 4. Dataset Provenance, Attribution & Limitations
 
 The repository supports two distinct data sources:
 
-### 3.1 Primary Real-World Benchmark: UCI ElectricityLoadDiagrams2011–2014
+### 4.1 Primary Real-World Benchmark: UCI ElectricityLoadDiagrams2011–2014
 - **Official Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014)
 - **Dataset DOI**: [`10.24432/C58C86`](https://doi.org/10.24432/C58C86)
 - **License**: Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -61,19 +104,19 @@ The repository supports two distinct data sources:
   $$E_{\text{hour}} = \bar{P}_{\text{hour}} \times 1.0\text{ h} \quad [\text{kWh}]$$
   Power ($\text{kW}$) and energy ($\text{kWh}$) are mathematically distinct and never conflated.
 
-### 3.2 Controlled Weather Experiment: Open-Meteo ERA5 Reanalysis
+### 4.2 Controlled Weather Experiment: Open-Meteo ERA5 Reanalysis
 - **API Provider**: [Open-Meteo Historical Weather API](https://archive-api.open-meteo.com/v1/archive)
 - **Reanalysis Model**: ECMWF ERA5 (Copernicus Climate Change Service)
 - **License**: Creative Commons Attribution 4.0 International (CC BY 4.0)
 - **Geographic Proxy**: Lisbon, Portugal (`38.7223° N`, `-9.1393° W`, elevation ~66m).
 - **Proxy Limitation**: Because official UCI client addresses are anonymized to protect privacy, Lisbon was chosen as the national grid anchor. Microclimate differences between Lisbon and the true client facility introduce spatial proxy variance; Lisbon weather is strictly a geographic proxy, not a verified local facility microclimate.
 
-### 3.3 Synthetic Facility Simulation
+### 4.3 Synthetic Facility Simulation
 - Synthesizes 730 days (17,520 hours) modeling continuous baseload (80 kW), two-shift production schedules, ambient temperature HVAC heating/cooling response ($7.5\text{ kW}/^\circ\text{C}$ cooling, $5.2\text{ kW}/^\circ\text{C}$ heating), and Gaussian noise.
 
 ---
 
-## 4. Architecture & Repository Structure
+## 5. Architecture & Repository Structure
 
 ```
 AI-Powered Energy Consumption Forecasting/
@@ -124,7 +167,7 @@ AI-Powered Energy Consumption Forecasting/
 
 ---
 
-## 5. Installation & Environment Setup
+## 6. Installation & Environment Setup
 
 ### Prerequisites
 - Python 3.10, 3.11, or 3.12
@@ -154,11 +197,11 @@ pip install -r requirements.txt
 
 ---
 
-## 6. Execution Instructions
+## 7. Execution Instructions
 
 The project provides a unified CLI via [`main.py`](main.py):
 
-### 6.1 Official Public Dataset Pipeline (UCI Electricity `MT_320`)
+### 7.1 Official Public Dataset Pipeline (UCI Electricity `MT_320`)
 ```bash
 # Option A: Run complete public pipeline in one command (process -> train -> forecast):
 python main.py --all-public --meter MT_320
@@ -177,13 +220,13 @@ python main.py --train-public --meter MT_320
 python main.py --forecast-public --meter MT_320
 ```
 
-### 6.2 Controlled Weather Experiment Pipeline (Model B)
+### 7.2 Controlled Weather Experiment Pipeline (Model B)
 ```bash
 # Execute full weather pipeline (fetch ERA5 cache -> align -> train Model B -> evaluate):
 python main.py --all-weather
 ```
 
-### 6.3 Synthetic Facility Simulation Pipeline
+### 7.3 Synthetic Facility Simulation Pipeline
 ```bash
 # Execute full synthetic facility pipeline:
 python main.py --all
@@ -195,15 +238,15 @@ python main.py --train
 python main.py --forecast
 ```
 
-### 6.4 Launch the Interactive Streamlit Dashboard
+### 7.4 Launch the Interactive Streamlit Dashboard
 ```bash
 streamlit run app.py
 ```
 *The dashboard allows switching between the Synthetic Facility, the Official Operational Baseline (Model A), and the Weather Experiment (Model B).*
 
-### 6.5 Run Automated Tests & Code Checks
+### 7.5 Run Automated Tests & Code Checks
 ```bash
-# Run complete test suite (47 passed unit tests):
+# Run complete test suite (48 passed unit tests):
 pytest -v
 
 # Run bytecode compilation check:
@@ -212,7 +255,7 @@ python -m compileall src tests main.py app.py
 
 ---
 
-## 7. Evaluation Methodology & Chronological Splitting Protocol
+## 8. Evaluation Methodology & Chronological Splitting Protocol
 
 Randomized K-fold cross-validation is strictly avoided in this system because randomly shuffling temporal records introduces catastrophic lookahead leakage. Instead, the system uses a **Two-Stage Chronological Benchmark Protocol**:
 
@@ -238,9 +281,9 @@ Randomized K-fold cross-validation is strictly avoided in this system because ra
 
 ---
 
-## 8. Benchmark Evaluation Results
+## 9. Benchmark Evaluation Results
 
-### 8.1 UCI Meter `MT_320` Out-of-Sample Holdout Results
+### 9.1 UCI Meter `MT_320` Out-of-Sample Holdout Results
 
 The table below presents the verified results on the untouched holdout test partition (`2014-11-01` to `2014-12-31`), distinguishing immediate **one-step ahead ($t+1$)** predictions from **recursive 24-hour multi-step forecasting ($t+1 \dots t+24$)**:
 
@@ -254,7 +297,7 @@ The table below presents the verified results on the untouched holdout test part
 | **Model B (Weather-Aware Exp 1)** | Recursive 24h (Retrospective ERA5 Reanalysis) | 5.12 | 8.78 | 5.56% | 0.8940 | 1,440 pts (60 origins) |
 | **Model B (Weather-Aware Exp 2)** | Recursive 24h (Operational Diurnal Persistence) | 5.19 | 8.84 | 5.64% | 0.8926 | 1,440 pts (60 origins) |
 
-### 8.2 Key Analytical Observations
+### 9.2 Key Analytical Observations
 1. **Model A vs. Naive Baselines**: Model A reduces WAPE by **35.23%** (from 7.21% to 4.67%) and RMSE by **45.60%** (from 11.99 kW to 6.52 kW) relative to the 24-hour daily persistence baseline.
 2. **One-Step vs. Recursive Evaluation**:
    - In one-step evaluation ($t+1$), the model receives true observed consumption up to $t$.
@@ -263,11 +306,11 @@ The table below presents the verified results on the untouched holdout test part
 
 ---
 
-## 9. Transparent Weather Experiment Summary & Operational Decision
+## 10. Transparent Weather Experiment Summary & Operational Decision
 
 To test the hypothesis that external ambient temperature provides predictive lift for commercial electricity demand, Model B was enriched with 2 additional weather features: `temperature_c` and `temperature_c_lag_1` (26 features total vs. 24 features in Model A).
 
-### 9.1 Feature Importance Findings
+### 10.1 Feature Importance Findings
 Random Forest Gini importance across all 26 features reveals:
 - `load_kw_lag_24`: **47.21%** (Primary daily rhythm)
 - `load_kw_lag_168`: **37.21%** (Primary weekly cycle)
@@ -277,7 +320,7 @@ Random Forest Gini importance across all 26 features reveals:
 - `temperature_c_lag_1`: **0.1693%** (Rank 16 of 26)
 - *Total Weather Feature Importance*: **0.4382%** (< 0.5%)
 
-### 9.2 Operational Policy Decision
+### 10.2 Operational Policy Decision
 1. **Negligible Predictive Gain**: Demand for meter `MT_320` is overwhelmingly driven by calendar schedules, day-of-week routines, and recent consumption inertia (>94.8% importance). Outdoor temperature provides zero meaningful reduction in holdout WAPE (4.67% vs 4.67%).
 2. **Operational Degradation**: In a realistic operational environment where day-ahead Numerical Weather Prediction (NWP) archives are unavailable, future weather must be approximated via 24-hour diurnal persistence ($\hat{T}_{t+h} = T_{t+h-24}$). Under these conditions, Model B slightly degrades recursive multi-step WAPE from **5.61%** to **5.64%**.
 3. **Operational Model Retention**:
@@ -285,12 +328,12 @@ Random Forest Gini importance across all 26 features reveals:
    - **Model B (Weather-Aware)** is cataloged as a documented research experiment.
    - Retrospective ERA5 evaluations are classified as diagnostic hindcasts, ensuring zero lookahead leakage in operational claims.
 
-### 9.3 Serialization Precision Note
+### 10.3 Serialization Precision Note
 An audit of metric recalculation demonstrated that saved JSON metrics are computed from unrounded 64-bit float arrays during training (`MAE = 4.29919452 kW` $\rightarrow$ `4.2992 kW`), whereas prediction CSVs round predictions to 2 decimal places (`np.round(..., 2)`) for readability. Recalculating metrics from 2-decimal rounded CSV text yields `MAE = 4.2991 kW` ($\Delta \approx 0.0001\text{ kW}$ or $< 0.003\%$). Both calculations evaluate the identical 1,464 test rows.
 
 ---
 
-## 10. Limitations, Reproducibility Notes & Future Scope
+## 11. Limitations, Reproducibility Notes & Future Scope
 
 ### Known Limitations
 1. **Single-Meter Scope**: Evaluation is grounded on Portuguese utility client `MT_320`. While confirming pipeline functionality, multi-step autoregressive dynamics, and baseline outperformance, results on a single meter cannot be assumed to generalize universally across all 370 consumers without cohort benchmarking.
